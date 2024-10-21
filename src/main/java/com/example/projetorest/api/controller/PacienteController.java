@@ -4,6 +4,7 @@ import com.example.projetorest.model.Paciente;
 import com.example.projetorest.model.Refeicao;
 import com.example.projetorest.service.PacienteService;
 import com.example.projetorest.service.RefeicaoService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,8 @@ public class PacienteController {
     }
 
     // Buscar paciente por ID
-    @Tag(name = "get", description = "GET information of a patient in the system")
+    @Tag(name = "GET")
+    @Operation(summary = "Get patient by ID", description = "Fetch a patient by their unique ID")
     @GetMapping(value = "/paciente/{id}", produces = {"application/json", "application/xml"})
     public ResponseEntity<Paciente> getPaciente(@RequestParam int id) {
         Paciente paciente = pacienteService.getPacienteById(id);
@@ -38,14 +40,14 @@ public class PacienteController {
     }
 
     // Buscar todos os pacientes
-    @Tag(name = "get", description = "GET information of all patients")
+    @Tag(name = "GET")
     @GetMapping("/all")
     public List<Paciente> getPacientes() {
         return pacienteService.getAllPacientes();
     }
 
     // Criar um novo paciente
-    @Tag(name = "post", description = "POST information of a patient in the system (create a patient)")
+    @Tag(name = "POST")
     @PostMapping(value = "/paciente", consumes = {"application/json", "application/xml"})
     public ResponseEntity<String> createPaciente(@RequestBody Paciente paciente) {
         try {
@@ -57,7 +59,7 @@ public class PacienteController {
     }
 
     // Deletar um paciente
-    @Tag(name = "delete", description = "DELETE a patient")
+    @Tag(name = "DELETE")
     @DeleteMapping("/paciente")
     public ResponseEntity<String> deletePaciente(@RequestParam int id) {
         Paciente paciente = pacienteService.getPacienteById(id);
@@ -70,7 +72,7 @@ public class PacienteController {
     }
 
     // Atualizar um paciente
-    @Tag(name = "put", description = "PUT update a patient's information")
+    @Tag(name = "PUT")
     @PutMapping(value = "/paciente", consumes = {"application/json", "application/xml"})
     public ResponseEntity<String> editPaciente(@RequestBody Paciente paciente) {
         try {
@@ -82,7 +84,7 @@ public class PacienteController {
     }
 
     // Adicionar refeição ao paciente
-    @Tag(name = "post", description = "Add/Update a meal to a patient")
+    @Tag(name = "POST")
     @PostMapping("/paciente/{pacienteId}/refeicao")
     public ResponseEntity<String> addRefeicaoToPaciente(
             @PathVariable Integer pacienteId, @RequestBody Refeicao refeicao) {
@@ -97,7 +99,7 @@ public class PacienteController {
     }
 
     // Atualizar refeição do paciente
-    @Tag(name = "put", description = "Update a meal for a patient")
+    @Tag(name = "PUT")
     @PutMapping("/paciente/{pacienteId}/refeicao/{refeicaoId}")
     public ResponseEntity<String> updateRefeicaoForPaciente(
             @PathVariable Integer pacienteId, @PathVariable Integer refeicaoId, @RequestBody Refeicao refeicaoAtualizada) {
@@ -120,7 +122,7 @@ public class PacienteController {
     }
 
     // Remover refeição do paciente
-    @Tag(name = "delete", description = "Remove a meal from a patient")
+    @Tag(name = "DELETE")
     @DeleteMapping("/paciente/{pacienteId}/refeicao/{refeicaoId}")
     public ResponseEntity<String> removeRefeicaoFromPaciente(
             @PathVariable Integer pacienteId, @PathVariable Integer refeicaoId) {

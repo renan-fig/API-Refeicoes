@@ -22,7 +22,7 @@ public class RefeicaoController {
     }
 
     // Buscar refeicao por ID
-    @Tag(name = "get", description = "GET information of a meal in the system")
+    @Tag(name = "GET", description = "GET a information in the system")
     @GetMapping(value = "/refeicao/{id}", produces = {"application/json", "application/xml"})
     public ResponseEntity<Refeicao> getRefeicao(@RequestParam int id) {
         Refeicao refeicao = refeicaoService.getRefeicaoById(id);
@@ -34,14 +34,14 @@ public class RefeicaoController {
     }
 
     // Buscar todas as refeicoes
-    @Tag(name = "get", description = "GET information of all meals")
+    @Tag(name = "GET")
     @GetMapping("/all")
     public List<Refeicao> getRefeicoes() {
         return refeicaoService.getAllRefeicoes();
     }
 
     // Criar uma nova refeicao
-    @Tag(name = "post", description = "POST information of a meal in the system (create a meal)")
+    @Tag(name = "POST", description = "POST a register in the system")
     @PostMapping(value = "/refeicao", consumes = {"application/json", "application/xml"})
     public ResponseEntity<String> createRefeicao(@RequestBody Refeicao refeicao) {
         try {
@@ -53,7 +53,7 @@ public class RefeicaoController {
     }
 
     // Deletar uma refeicao
-    @Tag(name = "delete", description = "DELETE a meal")
+    @Tag(name = "DELETE", description = "DELETE a register in the system")
     @DeleteMapping("/refeicao")
     public ResponseEntity<String> deleteRefeicao(@RequestParam int id) {
         Refeicao refeicao = refeicaoService.getRefeicaoById(id);
@@ -66,7 +66,7 @@ public class RefeicaoController {
     }
 
     // Atualizar uma refeicao
-    @Tag(name = "put", description = "PUT update a meal's information")
+    @Tag(name = "PUT")
     @PutMapping(value = "/refeicao", consumes = {"application/json", "application/xml"})
     public ResponseEntity<String> editRefeicao(@RequestBody Refeicao refeicao) {
         try {
