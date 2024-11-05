@@ -12,12 +12,17 @@ import java.util.List;
 public class PacienteService {
 
     @Autowired
-    private PacienteRepository pacienteRepository;
+    private final PacienteRepository pacienteRepository;
+
+    public PacienteService(PacienteRepository pacienteRepository) {
+        this.pacienteRepository = pacienteRepository;
+    }
 
     // Criar um novo paciente
     public void createPaciente(Paciente paciente) {
         pacienteRepository.save(paciente);
     }
+
 
     // Buscar todos os pacientes
     public List<Paciente> getAllPacientes() {
@@ -40,23 +45,30 @@ public class PacienteService {
     }
 
     // Adicionar refeição ao paciente
-    public void addRefeicaoToPaciente(int pacienteId, Refeicao refeicao) {
-        Paciente paciente = getPacienteById(pacienteId);
-        if (paciente != null) {
-            paciente.getRefeicoes().add(refeicao);
-            pacienteRepository.save(paciente);
-        }
-    }
+//    public void addRefeicaoToPaciente(int pacienteId, Refeicao refeicao) {
+//        Paciente paciente = getPacienteById(pacienteId);
+//        if (paciente != null) {
+//            // Persiste a refeição antes de associá-la ao paciente
+//            refeicao.setPaciente(paciente); // associa o paciente à refeição
+//            refeicaoService.createRefeicao(refeicao); // salva a refeição
+//
+//            paciente.getRefeicoes().add(refeicao); // adiciona a refeição persistida à lista do paciente
+//            pacienteRepository.save(paciente); // salva o paciente com a refeição já associada
+//        }
+//    }
 
     // Atualiza refeição do paciente
     public void updateRefeicaoFromPaciente(int pacienteId, Refeicao refeicaoAtualizada) {
         Paciente paciente = getPacienteById(pacienteId);
         if (paciente != null) {
             List<Refeicao> refeicoesPaciente = paciente.getRefeicoes();
-            refeicoesPaciente.stream()
-                    .filter(r -> r.getId() == refeicaoAtualizada.getId())
-                    .findFirst()
-                    .ifPresent(refeicoesPaciente::remove);
+            for (int i = 0; i < refeicoesPaciente.size(); i++) {
+                Refeicao refeicao = refeicoesPaciente.get(i);
+                if (refeicao.getId() == refeicaoAtualizada.getId()) {
+                    refeicoesPaciente.remove(i);
+                    break;
+                }
+            }
             refeicoesPaciente.add(refeicaoAtualizada);
             pacienteRepository.save(paciente);
         }

@@ -1,8 +1,8 @@
 package com.example.projetorest.model;
 
+import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-import javax.persistence.*;
 
 @Entity
 @XmlRootElement
@@ -18,21 +18,19 @@ public class Refeicao {
     @Column(nullable = false)
     private int qtdGramas;
     @ManyToOne
-    @JoinColumn(name = "paciente_id")
+    @JoinColumn(name = "paciente_id", referencedColumnName = "id")
     private Paciente paciente;
 
     // Construtores
     public Refeicao() {
     }
-    public Refeicao(int id, String descricao, Integer calorias, int quantidade) {
-        this.id = id;
+    public Refeicao(String descricao, Integer calorias, int quantidade) {
         this.descricao = descricao;
         this.calorias = calorias;
         this.qtdGramas = quantidade;
     }
 
-    public Refeicao(int id, String descricao, Integer calorias, int quantidade, Paciente paciente) {
-        this.id = id;
+    public Refeicao(String descricao, Integer calorias, int quantidade, Paciente paciente) {
         this.descricao = descricao;
         this.calorias = calorias;
         this.qtdGramas = quantidade;
@@ -61,11 +59,9 @@ public class Refeicao {
         return paciente;
     }
 
-    public void setIdPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
     public void setPaciente(Paciente paciente) {
-
+        if (this.paciente != paciente) {
+            this.paciente = paciente;
+        }
     }
 }

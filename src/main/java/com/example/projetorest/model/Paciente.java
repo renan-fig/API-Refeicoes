@@ -1,8 +1,8 @@
 package com.example.projetorest.model;
 
+import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +15,11 @@ public class Paciente {
     private int id;
     @Column(nullable = false)
     private String nome;
-    @Column(nullable = false)
+    @Column
     private Integer idade;
     @Column
     private String email;
-    @OneToMany(mappedBy = "paciente")
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Refeicao> listaRefeicoes;
 
     // Construtores
@@ -46,11 +46,14 @@ public class Paciente {
 
     public List<Refeicao> getRefeicoes() { return listaRefeicoes; }
 
-    public void setRefeicoes(List<Refeicao> refeicoes) { this.listaRefeicoes = refeicoes; }
+    public void setRefeicoes(List<Refeicao> refeicoes) {
+        this.listaRefeicoes = refeicoes;
+    }
 
     public void addRefeicao(Refeicao refeicao) {
-        this.listaRefeicoes.add(refeicao);
-        refeicao.setPaciente(this);
+        if (refeicao.getPaciente() != this) {
+            this.listaRefeicoes.add(refeicao);
+        }
     }
 
     public void removeRefeicao(Refeicao refeicao) {

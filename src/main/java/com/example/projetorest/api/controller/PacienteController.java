@@ -88,20 +88,20 @@ public class PacienteController {
     }
 
     // Adicionar refeição ao paciente
-    @Tag(name = "POST")
-    @Operation(summary = "Add a meal for the patient", description = "Add a meal for the patient")
-    @PostMapping("/paciente/{pacienteId}/refeicao")
-    public ResponseEntity<String> addRefeicaoToPaciente(
-            @PathVariable int pacienteId, @RequestBody Refeicao refeicao) {
-        Paciente paciente = pacienteService.getPacienteById(pacienteId);
-
-        if (paciente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado");
-        }
-
-        pacienteService.addRefeicaoToPaciente(pacienteId, refeicao);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Refeição adicionada ao paciente com sucesso");
-    }
+//    @Tag(name = "POST")
+//    @Operation(summary = "Add a meal for the patient", description = "Add a meal for the patient")
+//    @PostMapping("/paciente/{pacienteId}/refeicao")
+//    public ResponseEntity<String> addRefeicaoToPaciente(
+//            @PathVariable int pacienteId, @RequestBody Refeicao refeicao) {
+//        Paciente paciente = pacienteService.getPacienteById(pacienteId);
+//
+//        if (paciente == null) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado");
+//        }
+//
+//        pacienteService.addRefeicaoToPaciente(pacienteId, refeicao);
+//        return ResponseEntity.status(HttpStatus.CREATED).body("Refeição adicionada ao paciente com sucesso");
+//    }
 
     // Atualizar refeição do paciente
     @Tag(name = "PUT")
