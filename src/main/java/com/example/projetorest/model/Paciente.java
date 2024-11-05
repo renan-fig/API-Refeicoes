@@ -2,16 +2,25 @@ package com.example.projetorest.model;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @XmlRootElement
+@Table(name = "paciente")
 public class Paciente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
     private Integer idade;
+    @Column
     private String email;
-    private List<Refeicao> refeicoes = new ArrayList<>();
+    @OneToMany(mappedBy = "paciente")
+    private List<Refeicao> listaRefeicoes;
 
     // Construtores
     public Paciente() { }
@@ -35,15 +44,17 @@ public class Paciente {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public List<Refeicao> getRefeicoes() { return refeicoes; }
+    public List<Refeicao> getRefeicoes() { return listaRefeicoes; }
 
-    public void setRefeicoes(List<Refeicao> refeicoes) { this.refeicoes = refeicoes; }
+    public void setRefeicoes(List<Refeicao> refeicoes) { this.listaRefeicoes = refeicoes; }
 
     public void addRefeicao(Refeicao refeicao) {
-        this.refeicoes.add(refeicao);
+        this.listaRefeicoes.add(refeicao);
+        refeicao.setPaciente(this);
     }
 
     public void removeRefeicao(Refeicao refeicao) {
-        this.refeicoes.remove(refeicao);
+        this.listaRefeicoes.remove(refeicao);
+        refeicao.setPaciente(null);
     }
 }

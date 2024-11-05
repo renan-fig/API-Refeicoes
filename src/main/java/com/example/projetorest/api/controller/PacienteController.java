@@ -28,7 +28,7 @@ public class PacienteController {
 
     // Buscar paciente por ID
     @Tag(name = "GET")
-    @Operation(summary = "Get patient by ID", description = "Fetch a patient by their unique ID")
+    @Operation(summary = "Get patient by ID", description = "Search a patient by their ID")
     @GetMapping(value = "/paciente/{id}", produces = {"application/json", "application/xml"})
     public ResponseEntity<Paciente> getPaciente(@RequestParam int id) {
         Paciente paciente = pacienteService.getPacienteById(id);
@@ -41,6 +41,7 @@ public class PacienteController {
 
     // Buscar todos os pacientes
     @Tag(name = "GET")
+    @Operation(summary = "Get all patients", description = "Search all patient in memory")
     @GetMapping("/all")
     public List<Paciente> getPacientes() {
         return pacienteService.getAllPacientes();
@@ -48,6 +49,7 @@ public class PacienteController {
 
     // Criar um novo paciente
     @Tag(name = "POST")
+    @Operation(summary = "Create a patient", description = "Create a patient in memory")
     @PostMapping(value = "/paciente", consumes = {"application/json", "application/xml"})
     public ResponseEntity<String> createPaciente(@RequestBody Paciente paciente) {
         try {
@@ -60,6 +62,7 @@ public class PacienteController {
 
     // Deletar um paciente
     @Tag(name = "DELETE")
+    @Operation(summary = "Delete a patient", description = "Delete a patient in memory by their ID")
     @DeleteMapping("/paciente")
     public ResponseEntity<String> deletePaciente(@RequestParam int id) {
         Paciente paciente = pacienteService.getPacienteById(id);
@@ -73,6 +76,7 @@ public class PacienteController {
 
     // Atualizar um paciente
     @Tag(name = "PUT")
+    @Operation(summary = "Update a patient", description = "Update a patient in memory")
     @PutMapping(value = "/paciente", consumes = {"application/json", "application/xml"})
     public ResponseEntity<String> editPaciente(@RequestBody Paciente paciente) {
         try {
@@ -85,9 +89,10 @@ public class PacienteController {
 
     // Adicionar refeição ao paciente
     @Tag(name = "POST")
+    @Operation(summary = "Add a meal for the patient", description = "Add a meal for the patient")
     @PostMapping("/paciente/{pacienteId}/refeicao")
     public ResponseEntity<String> addRefeicaoToPaciente(
-            @PathVariable Integer pacienteId, @RequestBody Refeicao refeicao) {
+            @PathVariable int pacienteId, @RequestBody Refeicao refeicao) {
         Paciente paciente = pacienteService.getPacienteById(pacienteId);
 
         if (paciente == null) {
@@ -100,9 +105,10 @@ public class PacienteController {
 
     // Atualizar refeição do paciente
     @Tag(name = "PUT")
+    @Operation(summary = "Update a meal in the patient list", description = "Update a meal in the patient list in memory")
     @PutMapping("/paciente/{pacienteId}/refeicao/{refeicaoId}")
     public ResponseEntity<String> updateRefeicaoForPaciente(
-            @PathVariable Integer pacienteId, @PathVariable Integer refeicaoId, @RequestBody Refeicao refeicaoAtualizada) {
+            @PathVariable int pacienteId, @PathVariable int refeicaoId, @RequestBody Refeicao refeicaoAtualizada) {
 
         Paciente paciente = pacienteService.getPacienteById(pacienteId);
 
@@ -123,16 +129,20 @@ public class PacienteController {
 
     // Remover refeição do paciente
     @Tag(name = "DELETE")
+    @Operation(summary = "Delete a meal in the patient list", description = "Delete a meal in the patient list in memory")
     @DeleteMapping("/paciente/{pacienteId}/refeicao/{refeicaoId}")
     public ResponseEntity<String> removeRefeicaoFromPaciente(
-            @PathVariable Integer pacienteId, @PathVariable Integer refeicaoId) {
+            @PathVariable int pacienteId, @PathVariable int refeicaoId) {
         Paciente paciente = pacienteService.getPacienteById(pacienteId);
+        Refeicao refeicao = refeicaoService.getRefeicaoById(refeicaoId);
 
         if (paciente == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado");
         }
+        if (refeicao == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Refeição não encontrada");
+        }
 
-        // Remove a refeição do paciente
         pacienteService.removeRefeicaoFromPaciente(pacienteId, refeicaoId);
         return ResponseEntity.status(HttpStatus.OK).body("Refeição removida do paciente com sucesso");
     }
