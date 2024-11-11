@@ -14,7 +14,7 @@ COPY pom.xml ./
 RUN chmod +x mvnw
 
 # Download dependencies
-RUN ./mvnw dependency:go-offline -B
+RUN ./mvnw clean dependency:go-offline -B
 
 # Copy the source code
 COPY src src
@@ -32,7 +32,7 @@ WORKDIR /app
 COPY --from=build /app/target/users-0.0.1-SNAPSHOT.jar users.jar
 
 # Expose port 8080
-EXPOSE 8080
+EXPOSE 8090
 
 # Define the entrypoint
 ENTRYPOINT ["java", "-jar", "users.jar"]
