@@ -7,7 +7,12 @@ LABEL description="This is the Dockerfile for the Projetorest service"
 WORKDIR /app
 
 # Copy pom.xml and download dependencies
-COPY pom.xml .
+COPY mvnw ./
+COPY .mvn .mvn
+COPY pom.xml ./
+
+RUN chmod +x mvnw
+
 RUN mvn dependency:go-offline -B
 
 # Copy the source code
