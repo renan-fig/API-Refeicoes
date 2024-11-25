@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/refeicoes")
 public class RefeicaoController {
-
+    // todo: melhorar documentação da api
     private final RefeicaoService refeicaoService;
 
     @Autowired

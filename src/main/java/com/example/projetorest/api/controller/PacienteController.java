@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/pacientes")
 public class PacienteController {
-
+    // todo: melhorar documentação da api
     private final PacienteService pacienteService;
     private final RefeicaoService refeicaoService;
 
