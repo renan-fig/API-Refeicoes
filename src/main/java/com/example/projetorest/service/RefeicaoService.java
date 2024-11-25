@@ -21,26 +21,23 @@ public class RefeicaoService {
         this.refeicaoRepository = refeicaoRepository;
         this.pacienteService = pacienteService;
     }
-    // todo: corrigir o método createRefeicao para gravar corretamente a refeicao no paciente
     // Criar uma nova refeição
     public void createRefeicao(Refeicao refeicao) {
-        // Verifica se a refeição já tem um paciente associado
         if (refeicao.getPaciente() != null) {
-            Paciente paciente = refeicao.getPaciente();
+            Paciente paciente = pacienteService.getPacienteById(refeicao.getPaciente().getId());
 
-            // Inicializa a lista de refeições se estiver vazia
-            if (paciente.getRefeicoes() == null) {
-                paciente.setRefeicoes(new ArrayList<>());
-            }
+            if (paciente != null) {
+                if (paciente.getRefeicoes() == null) {
+                    paciente.setRefeicoes(new ArrayList<>());
+                }
 
-            // Adiciona a refeição à lista do paciente, se ainda não estiver
-            if (!paciente.getRefeicoes().contains(refeicao)) {
-                paciente.getRefeicoes().add(refeicao);
+                if (!paciente.getRefeicoes().contains(refeicao)) {
+                    paciente.getRefeicoes().add(refeicao);
+                }
+
+                pacienteService.updatePaciente(paciente);
             }
-            // Salva o paciente, garantindo que a refeição seja salva junto
-            pacienteService.createPaciente(paciente);
         } else {
-            // Caso não tenha um paciente, salva apenas a refeição
             refeicaoRepository.save(refeicao);
         }
     }

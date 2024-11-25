@@ -1,5 +1,7 @@
 package com.example.projetorest.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -17,11 +19,13 @@ public class Refeicao {
     private int calorias;
     @Column(nullable = false)
     private int qtdGramas;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id", referencedColumnName = "id")
+    @JsonBackReference
     private Paciente paciente;
 
     // Construtores
+    @Deprecated
     public Refeicao() {
     }
     public Refeicao(String descricao, Integer calorias, int quantidade) {
@@ -30,7 +34,8 @@ public class Refeicao {
         this.qtdGramas = quantidade;
     }
 
-    public Refeicao(String descricao, Integer calorias, int quantidade, Paciente paciente) {
+    public Refeicao(int id, String descricao, Integer calorias, int quantidade, Paciente paciente) {
+        this.id = id;
         this.descricao = descricao;
         this.calorias = calorias;
         this.qtdGramas = quantidade;
@@ -63,5 +68,19 @@ public class Refeicao {
         if (this.paciente != paciente) {
             this.paciente = paciente;
         }
+    }
+
+    public void removePaciente() {
+        this.paciente = null;
+    }
+
+    @Override
+    public String toString() {
+        return "Refeicao{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", calorias=" + calorias +
+                ", qtdGramas=" + qtdGramas +
+                '}';
     }
 }

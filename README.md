@@ -3,6 +3,17 @@
 Este projeto é uma API RESTful desenvolvida com Spring Boot para realizar operações CRUD (Create, Read, Update, Delete) dentro do contexto de paciente x dieta (refeições). 
 Ele permite o gerenciamento de um banco de dados de pacientes e suas respectivas refeições, com suporte a várias operações HTTP.
 
+## Acesso a API no Railway
+- Acesse a documentação da API no link https://api-refeicoes-production.up.railway.app/swagger-ui/index.html
+- Utilize um cliente HTTP (Postman, Insomnia, etc) para realizar as requisições
+
+## Como executar o projeto
+- Clone o repositório
+- Abra o projeto em sua IDE de preferência
+- Execute a classe `ProjetorestApplication.java`
+- Acesse a documentação da API no link http://localhost:8090/swagger-ui.html
+- Utilize um cliente HTTP (Postman, Insomnia, etc) para realizar as requisições
+
 ## Funcionalidades
 
 ### Paciente
@@ -18,9 +29,6 @@ Ele permite o gerenciamento de um banco de dados de pacientes e suas respectivas
 - **Buscar** uma refeição por ID ou listar todas as refeições de um paciente
 - **Atualizar** as informações de uma refeição existente
 - **Deletar** uma refeição
-
-## Documentação da API
-**Link:** http://localhost:8090/swagger-ui.html
 
 ## Tecnologias Utilizadas
 

@@ -1,5 +1,7 @@
 package com.example.projetorest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -19,16 +21,20 @@ public class Paciente {
     private Integer idade;
     @Column
     private String email;
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @JsonIgnore
     private List<Refeicao> listaRefeicoes;
 
     // Construtores
+    @Deprecated
     public Paciente() { }
-    public Paciente(int id, String nome, Integer idade, String email) {
+    public Paciente(int id, String nome, Integer idade, String email, List<Refeicao> refeicoes) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
         this.email = email;
+        this.listaRefeicoes = refeicoes;
     }
 
     // Getters e Setters
@@ -51,13 +57,25 @@ public class Paciente {
     }
 
     public void addRefeicao(Refeicao refeicao) {
-        if (refeicao.getPaciente() != this) {
+        if (!this.listaRefeicoes.contains(refeicao)) {
             this.listaRefeicoes.add(refeicao);
+            refeicao.setPaciente(this);
         }
     }
+
 
     public void removeRefeicao(Refeicao refeicao) {
         this.listaRefeicoes.remove(refeicao);
         refeicao.setPaciente(null);
+    }
+
+    @Override
+    public String toString() {
+        return "Paciente{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", idade=" + idade +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

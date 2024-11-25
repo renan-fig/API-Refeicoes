@@ -20,6 +20,11 @@ public class PacienteService {
 
     // Criar um novo paciente
     public void createPaciente(Paciente paciente) {
+        if (paciente.getRefeicoes() != null && !paciente.getRefeicoes().isEmpty()) {
+            for (Refeicao refeicao : paciente.getRefeicoes()) {
+                refeicao.setPaciente(paciente);
+            }
+        }
         pacienteRepository.save(paciente);
     }
 
@@ -44,6 +49,7 @@ public class PacienteService {
         pacienteRepository.deleteById(id);
     }
 
+    // todo: implementar métodos para adicionar, atualizar e remover refeições de um paciente
     // Adicionar refeição ao paciente
 //    public void addRefeicaoToPaciente(int pacienteId, Refeicao refeicao) {
 //        Paciente paciente = getPacienteById(pacienteId);
