@@ -4,15 +4,19 @@ Este projeto é uma API RESTful desenvolvida com Spring Boot para realizar opera
 Ele permite o gerenciamento de um banco de dados de pacientes e suas respectivas refeições, com suporte a várias operações HTTP.
 
 ## Acesso a API no Railway
-- Acesse a documentação da API no link https://api-refeicoes-production.up.railway.app/swagger-ui/index.html
+- Acesse a documentação da API através do  [Swagger UI](https://api-refeicoes-production.up.railway.app/swagger-ui/index.html).
 - Utilize um cliente HTTP (Postman, Insomnia, etc) para realizar as requisições
 
 ## Como executar o projeto
-- Clone o repositório
-- Abra o projeto em sua IDE de preferência
-- Execute a classe `ProjetorestApplication.java`
-- Acesse a documentação da API no link http://localhost:8090/swagger-ui.html
-- Utilize um cliente HTTP (Postman, Insomnia, etc) para realizar as requisições
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/nutriapp.git
+2. Abra o projeto em sua IDE de preferência
+3. Execute a classe `ProjetorestApplication.java`
+4. Acesse a documentação da API no link :
+5. ```bash 
+   http://localhost:8090/swagger-ui.html
+6. Utilize um cliente HTTP (Postman, Insomnia, etc) para realizar as requisições
 
 ## Funcionalidades
 
@@ -29,6 +33,13 @@ Ele permite o gerenciamento de um banco de dados de pacientes e suas respectivas
 - **Buscar** uma refeição por ID ou listar todas as refeições de um paciente
 - **Atualizar** as informações de uma refeição existente
 - **Deletar** uma refeição
+
+## Banco de Dados
+Este projeto utiliza um banco de dados relacional para persistência de dados. As entidades principais são Paciente e Refeição, com um relacionamento um para muitos, onde um paciente pode ter várias refeições associadas a ele.
+
+### Modelo de Dados
+ - **Paciente**: Contém informações como nome, idade, e email. Um paciente pode ter várias refeições associadas.
+ - **Refeição**: Contém informações sobre a refeição, como descrição, calorias, e quantidade em gramas. Cada refeição pode ser associada a um único paciente.
 
 ## Tecnologias Utilizadas
 
